@@ -1,22 +1,25 @@
 package com.elvishn.authorization.service
 
 import com.elvishn.authorization.Otp
-import com.elvishn.authorization.OtpRepository
 import com.elvishn.authorization.User
+import com.elvishn.authorization.repository.InMemoryOtpRepository
+import com.elvishn.authorization.repository.OtpRepository
 import org.springframework.stereotype.Service
-import java.util.*
+
 
 @Service
 class OtpService(private val otpRepository: OtpRepository) {
 
+    var repoImpl: OtpRepository = InMemoryOtpRepository()
+
     fun generateOtpForUser(): Otp {
         val user: User = User()
         val otp = user.generateOtp()
-        return otpRepository.save(otp)
+        return repoImpl.save(otp)
     }
-//
-    fun getAllOtp(): List<Otp> = otpRepository.findAll()
 
-    fun getByPhone(phone: String): Optional<Otp> = otpRepository.findById(phone)
+    fun getAllOtp(): List<Otp> = repoImpl.findAll()
+
+    fun getByPhone(phone: String): Otp? = repoImpl.findByPhoneNumber(phone)
 
 }
