@@ -18,7 +18,7 @@ class OtpController(private val otpService: OtpService) {
     fun getOtpByPhone(@PathVariable("phone") phone: String): Otp? =
         otpService.getByPhone(phone)
 
-    @GetMapping("/create")
-    fun create(): Otp = otpService.generateOtpForUser()
+    @GetMapping("/create/{number}")
+    fun create(@PathVariable number: String): Otp = otpService.generateOtp(number)
 
 }
