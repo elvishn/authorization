@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class IPv4Test {
-
     @Test
     fun `create valid IPv4`() {
         // given, when

@@ -17,13 +17,13 @@ import java.util.HexFormat
  * появится на слое персиста.
  */
 data class Id(
-    val value: String
+    val value: String,
 ) {
-
     fun fingerprint(): String {
-        val digest = MessageDigest
-            .getInstance("SHA-256")
-            .digest(value.toByteArray(Charsets.UTF_8))
+        val digest =
+            MessageDigest
+                .getInstance("SHA-256")
+                .digest(value.toByteArray(Charsets.UTF_8))
         return HexFormat
             .of()
             .formatHex(digest)
