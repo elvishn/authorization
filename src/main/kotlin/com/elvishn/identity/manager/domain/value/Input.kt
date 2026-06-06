@@ -1,4 +1,4 @@
-package com.elvishn.authorization.domain.value
+package com.elvishn.identity.manager.domain.value
 
 data class Input(val idToken: String,
     val verifier: String) {
