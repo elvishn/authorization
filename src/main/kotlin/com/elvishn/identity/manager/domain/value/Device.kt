@@ -5,8 +5,10 @@ data class Device(
     val model: String
 ) {
     companion object {
-        fun create(name: String,
-                   model: String): Device {
+        fun create(
+            name: String,
+            model: String
+        ): Device {
             return Device(name.trim(), model.trim())
         }
     }

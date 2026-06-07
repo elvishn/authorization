@@ -1,4 +1,4 @@
-package com.elvishn.authorization.controller
+package com.elvishn.identity.manager.api
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
