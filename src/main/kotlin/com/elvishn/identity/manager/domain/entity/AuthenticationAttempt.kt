@@ -16,9 +16,8 @@ data class AuthenticationAttempt(
     val status: AttemptStatus,
     val createdAt: Instant,
     val updatedAt: Instant,
-    val expiresAt: Instant
+    val expiresAt: Instant,
 ) {
-
     fun isExpired(now: Instant) = !now.isBefore(expiresAt)
 
     /**
@@ -33,22 +32,24 @@ data class AuthenticationAttempt(
         check(status == AttemptStatus.IN_PROGRESS) {
             "Cannot advance a finished attempt: $status"
         }
-        val next = when (outcome) {
-            StepOutcome.SUCCESS -> currentAuthenticationStep.nextOnSuccess
-            StepOutcome.FAIL -> currentAuthenticationStep.nextOnFail
-        }
+        val next =
+            when (outcome) {
+                StepOutcome.SUCCESS -> currentAuthenticationStep.nextOnSuccess
+                StepOutcome.FAIL -> currentAuthenticationStep.nextOnFail
+            }
         return if (next == null) {
             copy(
-                status = if (outcome == StepOutcome.SUCCESS) {
-                    AttemptStatus.SUCCESS
-                } else {
-                    AttemptStatus.FAILED
-                }
+                status =
+                    if (outcome == StepOutcome.SUCCESS) {
+                        AttemptStatus.SUCCESS
+                    } else {
+                        AttemptStatus.FAILED
+                    },
             )
         } else {
             copy(
                 previousAuthenticationSteps = previousAuthenticationSteps + currentAuthenticationStep,
-                currentAuthenticationStep = next
+                currentAuthenticationStep = next,
             )
         }
     }

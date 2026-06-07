@@ -3,7 +3,6 @@ package com.elvishn.identity.manager.domain.value
 import org.junit.jupiter.api.Test
 
 class DeviceTest {
-
     @Test
     fun `create valid Device`() {
         // given

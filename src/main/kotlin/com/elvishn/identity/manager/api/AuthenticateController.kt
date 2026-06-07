@@ -7,8 +7,7 @@ import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/api/v1")
-class AuthenticateController() {
-
+class AuthenticateController {
     @PostMapping
     fun authenticate() = Mono.just("OK")
 }

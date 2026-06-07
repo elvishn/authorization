@@ -1,7 +1,7 @@
 package com.elvishn.identity.manager.domain.value
 
 data class IPv4(
-    val value: String
+    val value: String,
 ) {
     companion object {
         fun create(ip: String): IPv4 {
@@ -47,4 +47,3 @@ data class IPv4(
         }
     }
 }
-

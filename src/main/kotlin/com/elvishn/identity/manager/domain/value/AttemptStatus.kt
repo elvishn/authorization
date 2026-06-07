@@ -5,7 +5,8 @@ enum class AttemptStatus {
     SUCCESS,
     BLOCKED,
     FAILED,
-    SUPERSEDED;
+    SUPERSEDED,
+    ;
 
     fun isTerminal() = this != IN_PROGRESS
 }

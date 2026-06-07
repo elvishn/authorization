@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class IdentityManagerApplication
 
 fun main(args: Array<String>) {
-	runApplication<com.elvishn.identity.manager.IdentityManagerApplication>(*args)
+    runApplication<IdentityManagerApplication>(*args)
 }

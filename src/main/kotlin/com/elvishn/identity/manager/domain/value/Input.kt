@@ -2,14 +2,12 @@ package com.elvishn.identity.manager.domain.value
 
 data class Input(
     val idToken: String,
-    val verifier: String
+    val verifier: String,
 ) {
     companion object {
         fun create(
             idToken: String,
-            verifier: String
-        ): Input {
-            return Input(idToken, verifier)
-        }
+            verifier: String,
+        ): Input = Input(idToken, verifier)
     }
 }
