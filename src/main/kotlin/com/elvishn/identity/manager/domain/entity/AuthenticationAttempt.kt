@@ -1,13 +1,9 @@
 package com.elvishn.identity.manager.domain.entity
 
-import com.elvishn.identity.manager.domain.value.AttemptStatus
-import com.elvishn.identity.manager.domain.value.Context
-import com.elvishn.identity.manager.domain.value.Id
-import com.elvishn.identity.manager.domain.value.Principal
-import com.elvishn.identity.manager.domain.value.StepOutcome
+import com.elvishn.identity.manager.domain.value.*
 import java.time.Instant
 
-data class AuthenticationAttempt(
+data class  AuthenticationAttempt(
     val id: Id,
     val principal: Principal,
     val context: Context,
