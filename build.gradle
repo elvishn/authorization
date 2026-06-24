@@ -50,3 +50,7 @@ tasks.named('test') {
 tasks.named('bootRun') {
     dependsOn 'ktlintCheck'
 }
+
+tasks.named('ktlintCheck') {
+    dependsOn 'ktlintFormat'
+}
