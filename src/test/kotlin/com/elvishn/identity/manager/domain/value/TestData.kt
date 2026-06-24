@@ -2,19 +2,12 @@ package com.elvishn.identity.manager.domain.value
 
 import com.elvishn.identity.manager.domain.entity.AuthenticationAttempt
 import com.elvishn.identity.manager.domain.entity.AuthenticationStep
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.*
+import java.time.Instant
+import java.util.UUID
 
 object TestData {
     // 1234:0987654321 + SHA256
     const val OTP_1234_VERIFIER = "4cfcc0abed8e05f2213c6a49e16c2b8f7149bf843c460711a87e2dcda73fc2fc:0987654321"
-    val DATA  = LocalDateTime.now()
-        .withHour(10)
-        .withMinute(0)
-        .withSecond(0)
-        .withNano(0)
-        .toInstant(ZoneOffset.UTC)
 
     val OTP_STEP =
         AuthenticationStep(
@@ -48,7 +41,7 @@ object TestData {
             ip = IPv4.create("127.0.0.1"),
             userAgent = "Chrome/v1",
             device = Device.create("Pixel", "8 Pro"),
-            phoneNumber = PhoneNumber.create("+8 800 555 35 35"),
+            phoneNumber = PhoneNumber("+8 800 555 35 35"),
         )
 
     val ATTEMPT_V1 =
@@ -57,10 +50,10 @@ object TestData {
             principal = Principal.ANON,
             context = CHROME_MOBILE_CTX,
             previousAuthenticationSteps = emptyList(),
-            currentAuthenticationStep = OTP_STEP,
+            currentAuthenticationStep = IP_STEP,
             status = AttemptStatus.IN_PROGRESS,
-            createdAt = DATA,
-            updatedAt = DATA,
-            expiresAt = DATA.plusSeconds(15_000),
+            createdAt = Instant.MIN,
+            updatedAt = Instant.MIN,
+            expiresAt = Instant.MIN.plusSeconds(15_000),
         )
 }
