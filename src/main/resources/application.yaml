@@ -1,23 +1,2 @@
 server:
   port: 8081
-
-spring:
-  r2dbc:
-    url: r2dbc:h2:mem:///testdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-  r2dbc-migrate:
-    enabled: true
-    locations: classpath:db/migration
-
-logging:
-  level:
-    org.springframework.r2dbc: DEBUG
-    io.r2dbc.h2: DEBUG
-    name.nkonev.r2dbc.migrate: DEBUG
