@@ -2,8 +2,7 @@ package com.elvishn.identity.manager.domain.value
 
 import java.security.MessageDigest
 import java.security.SecureRandom
-import java.util.Base64
-import java.util.HexFormat
+import java.util.*
 
 /**
  * Опаковая идентичность попытки аутентификации
@@ -45,4 +44,6 @@ data class Id(
             return Id(raw)
         }
     }
+
+    override fun toString(): String = value
 }

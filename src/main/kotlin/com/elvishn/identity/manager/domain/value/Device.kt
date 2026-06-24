@@ -10,4 +10,8 @@ data class Device(
             model: String,
         ): Device = Device(name.trim(), model.trim())
     }
+
+    override fun toString(): String {
+        return "$name, $model"
+    }
 }
