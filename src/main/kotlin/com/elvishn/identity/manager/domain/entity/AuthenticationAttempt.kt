@@ -1,9 +1,10 @@
 package com.elvishn.identity.manager.domain.entity
 
 import com.elvishn.identity.manager.domain.value.*
+import com.elvishn.identity.manager.persistence.entity.AuthAttemptEntity
 import java.time.Instant
 
-data class  AuthenticationAttempt(
+data class AuthenticationAttempt(
     val id: Id,
     val principal: Principal,
     val context: Context,
@@ -57,5 +58,23 @@ data class  AuthenticationAttempt(
             "Only an in-progress attempt can be superseded: $status"
         }
         return copy(status = AttemptStatus.SUPERSEDED)
+    }
+    
+    fun toAuthAttemptEntity(context: Context,
+                            step: AuthenticationStep): AuthAttemptEntity {
+        return AuthAttemptEntity(
+            id = this.id.toString(),
+            principal = this.principal.name,
+            currentAuthenticationStep = step.id.toString(),
+            contextIp = context.ip.toString(),
+            contextUserAgent = context.userAgent,
+            contextDeviceName = context.device.name,
+            contextDeviceModel = context.device.model,
+            contextPhoneNumber = context.phoneNumber.toString(),
+            status = this.status.name,
+            createdAt = this.createdAt.toEpochMilli(),
+            updatedAt = this.updatedAt.toEpochMilli(),
+            expiresAt = this.expiresAt.toEpochMilli()
+        )
     }
 }
