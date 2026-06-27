@@ -10,6 +10,7 @@ data class AuthenticationAttempt(
     val context: Context,
     val previousAuthenticationSteps: List<AuthenticationStep>,
     val currentAuthenticationStep: AuthenticationStep,
+    val pendingInputs: List<Input>,
     val status: AttemptStatus,
     val createdAt: Instant,
     val updatedAt: Instant,

@@ -12,17 +12,10 @@ data class AuthStepEntity(
     val nextOnSuccess: String?,
     val nextOnFail: String?,
 ) {
-    fun createDomainStep(pendingInputs: List<InputEntity>,
-                         ): AuthenticationStep {
+    fun createDomainStep(): AuthenticationStep {
         return AuthenticationStep(
             id = UUID.fromString(this.id),
             type = AuthenticationStepType.valueOf(this.type),
-            pendingInputs = pendingInputs.map { input ->
-                Input.create(
-                    idToken = input.idToken,
-                    verifier = input.verifier
-                )
-            } ,
             nextOnSuccess = null,
             nextOnFail = null
         )

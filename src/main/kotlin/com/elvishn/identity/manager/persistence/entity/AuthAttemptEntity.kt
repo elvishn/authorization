@@ -37,8 +37,14 @@ data class AuthAttemptEntity(
                 phoneNumber = PhoneNumber.create(contextPhoneNumber)
             ),
             previousAuthenticationSteps = previousSteps
-                .map { step -> step.createDomainStep(pendingInputs) },
-            currentAuthenticationStep = currentStep.createDomainStep(pendingInputs),
+                .map { step -> step.createDomainStep() },
+            currentAuthenticationStep = currentStep.createDomainStep(),
+            pendingInputs = pendingInputs.map { input ->
+                Input.create(
+                    idToken = input.idToken,
+                    verifier = input.verifier
+                )
+            },
             status = AttemptStatus.valueOf(this.status),
             createdAt = Instant.ofEpochMilli(this.createdAt),
             updatedAt = Instant.ofEpochMilli(this.updatedAt),

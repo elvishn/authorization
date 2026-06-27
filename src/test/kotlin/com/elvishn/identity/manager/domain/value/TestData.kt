@@ -20,7 +20,6 @@ object TestData {
         AuthenticationStep(
             id = UUID.fromString("0f73b20f-425e-43f8-91b3-041def33f923"),
             type = AuthenticationStepType.OTP,
-            pendingInputs = listOf(Input.create("IdToken1", OTP_1234_VERIFIER)),
             nextOnSuccess = null,
             nextOnFail = null,
         )
@@ -29,7 +28,6 @@ object TestData {
         AuthenticationStep(
             id = UUID.fromString("b96d1cea-13e5-4700-b469-f45944c363ab"),
             type = AuthenticationStepType.CHECK_PHONE,
-            pendingInputs = listOf(Input.create("IdToken1", "+8 800 555 35 35")),
             nextOnSuccess = OTP_STEP,
             nextOnFail = null,
         )
@@ -38,7 +36,6 @@ object TestData {
         AuthenticationStep(
             id = UUID.fromString("73519425-7db1-4656-b79b-0522208476bb"),
             type = AuthenticationStepType.IP,
-            pendingInputs = listOf(),
             nextOnSuccess = CHECK_PHONE,
             nextOnFail = null,
         )
@@ -58,9 +55,40 @@ object TestData {
             context = CHROME_MOBILE_CTX,
             previousAuthenticationSteps = emptyList(),
             currentAuthenticationStep = OTP_STEP,
+            pendingInputs = listOf(Input.create("IdToken1", OTP_1234_VERIFIER)),
             status = AttemptStatus.IN_PROGRESS,
             createdAt = DATA,
             updatedAt = DATA,
             expiresAt = DATA.plusSeconds(15_000),
         )
+
+    val ATTEMPT_V2 =
+        AuthenticationAttempt(
+            id = Id.generate(),
+            principal = Principal.ANON,
+            context = CHROME_MOBILE_CTX,
+            previousAuthenticationSteps = emptyList(),
+            currentAuthenticationStep = IP_STEP,
+            pendingInputs = listOf(),
+            status = AttemptStatus.IN_PROGRESS,
+            createdAt = DATA,
+            updatedAt = DATA,
+            expiresAt = DATA.plusSeconds(15_000),
+        )
+
+    val ATTEMPT_V3 =
+        AuthenticationAttempt(
+            id = Id.generate(),
+            principal = Principal.PHONE,
+            context = CHROME_MOBILE_CTX,
+            previousAuthenticationSteps = emptyList(),
+            currentAuthenticationStep = CHECK_PHONE,
+            pendingInputs = listOf(Input.create("IdToken1", "+8 800 555 35 35")),
+            status = AttemptStatus.IN_PROGRESS,
+            createdAt = DATA,
+            updatedAt = DATA,
+            expiresAt = DATA.plusSeconds(15_000),
+        )
+
+
 }

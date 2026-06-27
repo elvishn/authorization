@@ -16,7 +16,7 @@ class AuthAttemptEntityTest {
             previousSteps = ATTEMPT_V1.previousAuthenticationSteps
                 .map {step -> step.toAuthStepEntity(ATTEMPT_V1.id.toString())},
             currentStep = OTP_STEP.toAuthStepEntity(entity.id),
-            pendingInputs = OTP_STEP.pendingInputs.map {input -> input.toInputEntity(OTP_STEP.id.toString())}
+            pendingInputs = ATTEMPT_V1.pendingInputs.map {input -> input.toInputEntity(entity.id)}
         )
 
         assert(ATTEMPT_V1 == domain)

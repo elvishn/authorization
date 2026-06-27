@@ -8,7 +8,6 @@ import java.util.*
 data class AuthenticationStep(
     val id: UUID,
     val type: AuthenticationStepType,
-    val pendingInputs: List<Input>,
     val nextOnSuccess: AuthenticationStep?,
     val nextOnFail: AuthenticationStep?,
 ) {

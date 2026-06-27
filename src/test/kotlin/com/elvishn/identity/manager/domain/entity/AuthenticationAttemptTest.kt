@@ -3,6 +3,7 @@ package com.elvishn.identity.manager.domain.entity
 import com.elvishn.identity.manager.domain.value.TestData.ATTEMPT_V1
 import com.elvishn.identity.manager.domain.value.TestData.CHROME_MOBILE_CTX
 import com.elvishn.identity.manager.domain.value.TestData.IP_STEP
+import com.elvishn.identity.manager.domain.value.TestData.OTP_STEP
 import com.elvishn.identity.manager.persistence.entity.AuthAttemptEntity
 import org.junit.jupiter.api.Test
 
@@ -10,12 +11,12 @@ class AuthenticationAttemptTest {
     @Test
     fun `create AuthAttemptEntity`() {
         val entity = ATTEMPT_V1.toAuthAttemptEntity(CHROME_MOBILE_CTX,
-            IP_STEP)
+            OTP_STEP)
         print(CHROME_MOBILE_CTX.phoneNumber.toString())
         val result = AuthAttemptEntity(
             id = ATTEMPT_V1.id.toString(),
             principal = "ANON",
-            currentAuthenticationStep = IP_STEP.id.toString(),
+            currentAuthenticationStep = OTP_STEP.id.toString(),
             contextIp = "127.0.0.1",
             contextUserAgent = "Chrome/v1",
             contextDeviceName = "Pixel",

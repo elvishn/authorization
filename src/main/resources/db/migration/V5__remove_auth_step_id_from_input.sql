@@ -1,0 +1,1 @@
+ALTER TABLE inputs DROP COLUMN auth_step_id;

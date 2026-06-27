@@ -56,7 +56,7 @@ class TestInputStepRepository {
         val result = inputRepository.save(input)
         // Then
         StepVerifier.create(result)
-            .expectNext(input.authStepId)
+            .expectNext(input.authAttemptId)
             .verifyComplete()
     }
 
@@ -72,7 +72,7 @@ class TestInputStepRepository {
         // Then
         StepVerifier.create(result)
             .expectNextMatches { found ->
-                found.authStepId == input.authStepId &&
+                found.authAttemptId == input.authAttemptId &&
                         found.idToken == input.idToken &&
                         found.verifier == input.verifier
             }

@@ -13,9 +13,9 @@ data class Input(
         ): Input = Input(idToken, verifier)
     }
 
-    fun toInputEntity(stepId: String): InputEntity {
+    fun toInputEntity(attemptId: String): InputEntity {
         return InputEntity(
-            authStepId = stepId,
+            authAttemptId = attemptId,
             idToken = this.idToken,
             verifier = this.verifier
         )

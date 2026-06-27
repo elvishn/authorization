@@ -13,30 +13,30 @@ class InputRepository(
     fun save(input: InputEntity): Mono<String> {
         val sql = """
             INSERT INTO inputs (
-                auth_step_id, id_token, verifier
+                auth_attempt_id, id_token, verifier
             ) VALUES (
-                :authStepId, :idToken, :verifier
+                :authAttemptId, :idToken, :verifier
             )
         """.trimIndent()
 
         return databaseClient.sql(sql)
-            .bind("authStepId", input.authStepId)
+            .bind("authAttemptId", input.authAttemptId)
             .bind("idToken", input.idToken)
             .bind("verifier", input.verifier)
             .then()
-            .thenReturn(input.authStepId)
+            .thenReturn(input.authAttemptId)
     }
 
-    fun findById(authStepId: String): Flux<InputEntity> {
-        val sql = "SELECT * FROM inputs WHERE auth_step_id = :authStepId"
+    fun findById(authAttemptId: String): Flux<InputEntity> {
+        val sql = "SELECT * FROM inputs WHERE auth_attempt_id = :authAttemptId"
 
         return databaseClient.sql(sql)
-            .bind("authStepId", authStepId)
+            .bind("authAttemptId", authAttemptId)
             .fetch()
             .all()
             .map { row ->
                 InputEntity(
-                    authStepId = row["auth_step_id"] as String,
+                    authAttemptId = row["auth_attempt_id"] as String,
                     idToken = row["id_token"] as String,
                     verifier = row["verifier"] as String
                 ) }
