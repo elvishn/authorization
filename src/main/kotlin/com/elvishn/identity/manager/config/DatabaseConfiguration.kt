@@ -7,9 +7,6 @@ import org.springframework.r2dbc.core.DatabaseClient
 
 @Configuration
 class DatabaseConfiguration {
-
     @Bean
-    fun databaseClient(connectionFactory: ConnectionFactory): DatabaseClient {
-        return DatabaseClient.create(connectionFactory)
-    }
+    fun databaseClient(connectionFactory: ConnectionFactory): DatabaseClient = DatabaseClient.create(connectionFactory)
 }

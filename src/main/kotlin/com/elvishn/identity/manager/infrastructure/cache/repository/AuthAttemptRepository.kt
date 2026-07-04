@@ -1,16 +1,17 @@
-package com.elvishn.identity.manager.repository
+package com.elvishn.identity.manager.infrastructure.cache.repository
 
-import com.elvishn.identity.manager.persistence.entity.AuthAttemptEntity
+import com.elvishn.identity.manager.infrastructure.cache.model.AuthAttemptEntity
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 
 @Repository
 class AuthAttemptRepository(
-    private val databaseClient: DatabaseClient
+    private val databaseClient: DatabaseClient,
 ) {
     fun save(authAttempt: AuthAttemptEntity): Mono<String> {
-        val sql = """
+        val sql =
+            """
             INSERT INTO auth_attempt 
             (id, principal, current_authentication_step, context_ip, context_user_agent, context_device_name, 
             context_device_model, context_phone_number, status, created_at, updated_at, expires_at
@@ -18,9 +19,10 @@ class AuthAttemptRepository(
             :id, :principal, :currentAuthenticationStep, :contextIp, :contextUserAgent, :contextDeviceName,
             :contextDeviceModel, :contextPhoneNumber, :status, :createdAt, :updatedAt, :expiresAt
             )
-        """.trimIndent()
+            """.trimIndent()
 
-        return databaseClient.sql(sql)
+        return databaseClient
+            .sql(sql)
             .bind("id", authAttempt.id)
             .bind("principal", authAttempt.principal)
             .bind("currentAuthenticationStep", authAttempt.currentAuthenticationStep)
@@ -40,7 +42,8 @@ class AuthAttemptRepository(
     fun findById(id: String): Mono<AuthAttemptEntity> {
         val sql = "SELECT * FROM auth_attempt WHERE id = :id"
 
-        return databaseClient.sql(sql)
+        return databaseClient
+            .sql(sql)
             .bind("id", id)
             .fetch()
             .one()
@@ -57,7 +60,7 @@ class AuthAttemptRepository(
                     status = row["status"] as String,
                     createdAt = row["created_at"] as Long,
                     updatedAt = row["updated_at"] as Long,
-                    expiresAt = row["expires_at"] as Long
+                    expiresAt = row["expires_at"] as Long,
                 )
             }
     }

@@ -11,7 +11,5 @@ data class Device(
         ): Device = Device(name.trim(), model.trim())
     }
 
-    override fun toString(): String {
-        return "$name, $model"
-    }
+    override fun toString(): String = "$name, $model"
 }

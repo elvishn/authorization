@@ -1,8 +1,10 @@
-package com.elvishn.identity.manager.repository
+package com.elvishn.identity.manager.infrastructure.cache.repository
 
 import com.elvishn.identity.manager.domain.value.TestData.ATTEMPT_V1
 import com.elvishn.identity.manager.domain.value.TestData.CHROME_MOBILE_CTX
 import com.elvishn.identity.manager.domain.value.TestData.OTP_STEP
+import com.elvishn.identity.manager.infrastructure.cache.repository.AuthAttemptRepository
+import com.elvishn.identity.manager.infrastructure.cache.repository.AuthStepRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,7 +14,6 @@ import reactor.test.StepVerifier
 
 @SpringBootTest
 class TestAuthStepRepository {
-
     val authStep = OTP_STEP.toAuthStepEntity(ATTEMPT_V1.id.toString())
 
     @Autowired
@@ -26,10 +27,12 @@ class TestAuthStepRepository {
 
     @BeforeEach
     fun setUp() {
-        databaseClient.sql("DELETE FROM auth_step")
+        databaseClient
+            .sql("DELETE FROM auth_step")
             .then()
             .block()
-        databaseClient.sql("DELETE FROM auth_attempt")
+        databaseClient
+            .sql("DELETE FROM auth_attempt")
             .then()
             .block()
 
@@ -42,7 +45,8 @@ class TestAuthStepRepository {
         // When
         val result = authStepRepository.save(authStep)
         // Then
-        StepVerifier.create(result)
+        StepVerifier
+            .create(result)
             .expectNext(authStep.id)
             .verifyComplete()
     }
@@ -53,14 +57,14 @@ class TestAuthStepRepository {
         // When
         val result = authStepRepository.findById(savedId!!)
         // Then
-        StepVerifier.create(result)
+        StepVerifier
+            .create(result)
             .expectNextMatches { found ->
                 found.id == authStep.id &&
-                        found.authAttemptId == authStep.authAttemptId &&
-                        found.type == authStep.type &&
-                        found.nextOnSuccess == authStep.nextOnSuccess &&
-                        found.nextOnFail == authStep.nextOnFail
-            }
-            .verifyComplete()
+                    found.authAttemptId == authStep.authAttemptId &&
+                    found.type == authStep.type &&
+                    found.nextOnSuccess == authStep.nextOnSuccess &&
+                    found.nextOnFail == authStep.nextOnFail
+            }.verifyComplete()
     }
 }

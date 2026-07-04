@@ -1,8 +1,9 @@
-package com.elvishn.identity.manager.repository
+package com.elvishn.identity.manager.infrastructure.cache.repository
 
 import com.elvishn.identity.manager.domain.value.TestData.ATTEMPT_V1
 import com.elvishn.identity.manager.domain.value.TestData.CHROME_MOBILE_CTX
 import com.elvishn.identity.manager.domain.value.TestData.OTP_STEP
+import com.elvishn.identity.manager.infrastructure.cache.repository.AuthAttemptRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,7 +13,6 @@ import reactor.test.StepVerifier
 
 @SpringBootTest
 class TestAuthAttemptRepository {
-
     val authAttempt = ATTEMPT_V1.toAuthAttemptEntity(CHROME_MOBILE_CTX, OTP_STEP)
 
     @Autowired
@@ -23,7 +23,8 @@ class TestAuthAttemptRepository {
 
     @BeforeEach
     fun setUp() {
-        databaseClient.sql("DELETE FROM auth_attempt")
+        databaseClient
+            .sql("DELETE FROM auth_attempt")
             .then()
             .block()
     }
@@ -33,7 +34,8 @@ class TestAuthAttemptRepository {
         // When
         val result = authAttemptRepository.save(authAttempt)
         // Then
-        StepVerifier.create(result)
+        StepVerifier
+            .create(result)
             .expectNext(authAttempt.id)
             .verifyComplete()
     }
@@ -44,21 +46,21 @@ class TestAuthAttemptRepository {
         // When
         val result = authAttemptRepository.findById(savedId!!)
         // Then
-        StepVerifier.create(result)
+        StepVerifier
+            .create(result)
             .expectNextMatches { found ->
                 found.id == authAttempt.id &&
-                        found.principal == authAttempt.principal &&
-                        found.currentAuthenticationStep == authAttempt.currentAuthenticationStep &&
-                        found.contextIp == authAttempt.contextIp &&
-                        found.contextUserAgent == authAttempt.contextUserAgent &&
-                        found.contextDeviceName == authAttempt.contextDeviceName &&
-                        found.contextDeviceModel == authAttempt.contextDeviceModel &&
-                        found.contextPhoneNumber == authAttempt.contextPhoneNumber &&
-                        found.status == authAttempt.status &&
-                        found.createdAt == authAttempt.createdAt &&
-                        found.updatedAt == authAttempt.updatedAt &&
-                        found.expiresAt == authAttempt.expiresAt
-            }
-            .verifyComplete()
+                    found.principal == authAttempt.principal &&
+                    found.currentAuthenticationStep == authAttempt.currentAuthenticationStep &&
+                    found.contextIp == authAttempt.contextIp &&
+                    found.contextUserAgent == authAttempt.contextUserAgent &&
+                    found.contextDeviceName == authAttempt.contextDeviceName &&
+                    found.contextDeviceModel == authAttempt.contextDeviceModel &&
+                    found.contextPhoneNumber == authAttempt.contextPhoneNumber &&
+                    found.status == authAttempt.status &&
+                    found.createdAt == authAttempt.createdAt &&
+                    found.updatedAt == authAttempt.updatedAt &&
+                    found.expiresAt == authAttempt.expiresAt
+            }.verifyComplete()
     }
 }
