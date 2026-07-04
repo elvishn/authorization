@@ -46,4 +46,8 @@ data class IPv4(
             return octets == 4 && digits != 0
         }
     }
+
+    override fun toString(): String {
+        return value
+    }
 }

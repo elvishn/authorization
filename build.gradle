@@ -6,6 +6,8 @@ plugins {
     id 'org.jlleitschuh.gradle.ktlint' version '12.1.2'
 }
 
+ext['liquibase.version'] = '4.3.0'
+
 group = 'com.elvishn'
 version = '0.0.1-SNAPSHOT'
 description = 'identity-manager'
@@ -27,10 +29,17 @@ dependencies {
     // KOTLIN
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
-
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("name.nkonev.r2dbc-migrate:r2dbc-migrate-spring-boot-starter:4.0.1")
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("io.r2dbc:r2dbc-h2")
     // TEST
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation("io.projectreactor:reactor-test")
+    testImplementation("io.r2dbc:r2dbc-h2")
+    testImplementation("com.h2database:h2")
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 kotlin {

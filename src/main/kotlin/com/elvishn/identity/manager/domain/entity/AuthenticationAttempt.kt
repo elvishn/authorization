@@ -1,10 +1,7 @@
 package com.elvishn.identity.manager.domain.entity
 
-import com.elvishn.identity.manager.domain.value.AttemptStatus
-import com.elvishn.identity.manager.domain.value.Context
-import com.elvishn.identity.manager.domain.value.Id
-import com.elvishn.identity.manager.domain.value.Principal
-import com.elvishn.identity.manager.domain.value.StepOutcome
+import com.elvishn.identity.manager.domain.value.*
+import com.elvishn.identity.manager.persistence.entity.AuthAttemptEntity
 import java.time.Instant
 
 data class AuthenticationAttempt(
@@ -13,6 +10,7 @@ data class AuthenticationAttempt(
     val context: Context,
     val previousAuthenticationSteps: List<AuthenticationStep>,
     val currentAuthenticationStep: AuthenticationStep,
+    val pendingInputs: List<Input>,
     val status: AttemptStatus,
     val createdAt: Instant,
     val updatedAt: Instant,
@@ -61,5 +59,23 @@ data class AuthenticationAttempt(
             "Only an in-progress attempt can be superseded: $status"
         }
         return copy(status = AttemptStatus.SUPERSEDED)
+    }
+    
+    fun toAuthAttemptEntity(context: Context,
+                            step: AuthenticationStep): AuthAttemptEntity {
+        return AuthAttemptEntity(
+            id = this.id.toString(),
+            principal = this.principal.name,
+            currentAuthenticationStep = step.id.toString(),
+            contextIp = context.ip.toString(),
+            contextUserAgent = context.userAgent,
+            contextDeviceName = context.device.name,
+            contextDeviceModel = context.device.model,
+            contextPhoneNumber = context.phoneNumber.toString(),
+            status = this.status.name,
+            createdAt = this.createdAt.toEpochMilli(),
+            updatedAt = this.updatedAt.toEpochMilli(),
+            expiresAt = this.expiresAt.toEpochMilli()
+        )
     }
 }
