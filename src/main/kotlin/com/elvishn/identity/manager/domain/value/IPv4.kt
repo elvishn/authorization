@@ -47,7 +47,5 @@ data class IPv4(
         }
     }
 
-    override fun toString(): String {
-        return value
-    }
+    override fun toString(): String = value
 }

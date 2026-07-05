@@ -1,4 +1,4 @@
-package com.elvishn.identity.manager.persistence.entity
+package com.elvishn.identity.manager.infrastructure.cache.model
 
 import com.elvishn.identity.manager.domain.value.Input
 
@@ -7,10 +7,9 @@ data class InputEntity(
     val idToken: String,
     val verifier: String,
 ) {
-    fun createDomainInput(): Input {
-        return Input.create(
+    fun createDomainInput(): Input =
+        Input.create(
             idToken = this.idToken,
-            verifier = this.verifier
+            verifier = this.verifier,
         )
-    }
 }

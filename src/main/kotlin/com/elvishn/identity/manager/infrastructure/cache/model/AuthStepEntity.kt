@@ -1,9 +1,8 @@
-package com.elvishn.identity.manager.persistence.entity
+package com.elvishn.identity.manager.infrastructure.cache.model
 
 import com.elvishn.identity.manager.domain.entity.AuthenticationStep
 import com.elvishn.identity.manager.domain.value.AuthenticationStepType
-import com.elvishn.identity.manager.domain.value.Input
-import java.util.*
+import java.util.UUID
 
 data class AuthStepEntity(
     val id: String,
@@ -12,12 +11,11 @@ data class AuthStepEntity(
     val nextOnSuccess: String?,
     val nextOnFail: String?,
 ) {
-    fun createDomainStep(): AuthenticationStep {
-        return AuthenticationStep(
+    fun createDomainStep(): AuthenticationStep =
+        AuthenticationStep(
             id = UUID.fromString(this.id),
             type = AuthenticationStepType.valueOf(this.type),
             nextOnSuccess = null,
-            nextOnFail = null
+            nextOnFail = null,
         )
-    }
 }

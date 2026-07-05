@@ -1,6 +1,6 @@
 package com.elvishn.identity.manager.domain.value
 
-import com.elvishn.identity.manager.persistence.entity.InputEntity
+import com.elvishn.identity.manager.infrastructure.cache.model.InputEntity
 
 data class Input(
     val idToken: String,
@@ -13,11 +13,10 @@ data class Input(
         ): Input = Input(idToken, verifier)
     }
 
-    fun toInputEntity(attemptId: String): InputEntity {
-        return InputEntity(
+    fun toInputEntity(attemptId: String): InputEntity =
+        InputEntity(
             authAttemptId = attemptId,
             idToken = this.idToken,
-            verifier = this.verifier
+            verifier = this.verifier,
         )
-    }
 }
